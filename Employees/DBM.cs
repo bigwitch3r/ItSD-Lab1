@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Employees
 {
-    internal class DBM
+    internal class DBM : IDBM
     {
         private SQLiteConnection cnn;
         public void connect()

@@ -81,6 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBM.cs" />
+    <Compile Include="Department.cs" />
+    <Compile Include="Employee.cs" />
+    <Compile Include="Empoyeer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +102,7 @@
     <Compile Include="Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
+    <Compile Include="IDBM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
