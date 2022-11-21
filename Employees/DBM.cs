@@ -57,5 +57,12 @@ namespace Employees
 
             cmd.ExecuteNonQuery();
         }
+
+        public void delete(string id)
+        {
+            SQLiteCommand cmd = new SQLiteCommand(
+                "delete from Persons where id = " + id, cnn);
+            cmd.ExecuteNonQuery();
+        }
     }
 }

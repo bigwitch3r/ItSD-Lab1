@@ -110,17 +110,25 @@ namespace Employees
         private void btn2_Click(object sender, EventArgs e)
         {
             string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-            SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3"); 
-            cnn.Open();
-            SQLiteCommand cmd = new SQLiteCommand(
+
+            dBM.connect();
+            /*SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3"); 
+            cnn.Open();*/
+
+            dBM.delete(id);
+            /*SQLiteCommand cmd = new SQLiteCommand(
                 "delete from Persons where id = " + id, cnn);
-            cmd.ExecuteNonQuery();
-            SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
+            cmd.ExecuteNonQuery();*/
+
+            dBM.data_fill(dataGridView1);
+            /*SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
      "birthdate, worksfrom from Persons", cnn);
             DataSet ds = new DataSet();
             da.Fill(ds);
             cnn.Close();
-            dataGridView1.DataSource = ds.Tables[0];
+            dataGridView1.DataSource = ds.Tables[0];*/
+
+            dBM.disconnect();
         }
 
         private void button3_Click(object sender, EventArgs e)

@@ -23,5 +23,7 @@ namespace Employees
             DateTimePicker dateTimePicker1,
             DateTimePicker dateTimePicker2,
             System.Windows.Forms.ComboBox comboBox1);
+
+        void delete(string id);
     }
 }
