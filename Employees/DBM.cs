@@ -64,5 +64,24 @@ namespace Employees
                 "delete from Persons where id = " + id, cnn);
             cmd.ExecuteNonQuery();
         }
+
+        public void update_table(string id,
+            System.Windows.Forms.TextBox textBox1,
+            System.Windows.Forms.TextBox textBox2,
+            System.Windows.Forms.TextBox textBox3,
+            DateTimePicker dateTimePicker1,
+            DateTimePicker dateTimePicker2,
+            System.Windows.Forms.ComboBox comboBox1)
+        {
+            SQLiteCommand cmd = new SQLiteCommand(
+                "update Persons set lastname = '" + textBox1.Text + "'," +
+                               "firstname = '" + textBox2.Text + "'," +
+                               "middlename = '" + textBox3.Text + "'," +
+                               "birthdate = '" + dateTimePicker1.Value.ToShortDateString() + "'," +
+                               "worksfrom = '" + dateTimePicker2.Value.ToShortDateString() + "', " +
+                               "gender = '" + comboBox1.Text + "' " +
+                               "where id = " + id, cnn);
+            cmd.ExecuteNonQuery();
+        }
     }
 }

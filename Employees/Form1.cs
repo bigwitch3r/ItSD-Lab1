@@ -141,10 +141,15 @@ namespace Employees
                 MessageBox.Show("Неправильно введены даты !");
                 return;
             }
+
             string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-            SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3"); 
-            cnn.Open();
-            SQLiteCommand cmd = new SQLiteCommand(
+
+            dBM.connect();
+            /*SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3"); 
+            cnn.Open();*/
+
+            dBM.update_table(id, textBox1, textBox2, textBox3, dateTimePicker1, dateTimePicker2, comboBox1);
+            /*SQLiteCommand cmd = new SQLiteCommand(
                 "update Persons set lastname = '" + textBox1.Text + "'," + 
                                "firstname = '" + textBox2.Text + "'," +
                                "middlename = '" + textBox3.Text + "'," +
@@ -152,13 +157,17 @@ namespace Employees
                                "worksfrom = '" + dateTimePicker2.Value.ToShortDateString() + "', " +
                                "gender = '" + comboBox1.Text + "' " +
                                "where id = " + id, cnn);
-            cmd.ExecuteNonQuery();
-            SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
+            cmd.ExecuteNonQuery();*/
+
+            dBM.data_fill(dataGridView1);
+            dBM.disconnect();
+
+            /*SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
     "birthdate, worksfrom from Persons", cnn); 
             DataSet ds = new DataSet();
             da.Fill(ds);
             cnn.Close();
-            dataGridView1.DataSource = ds.Tables[0];
+            dataGridView1.DataSource = ds.Tables[0];*/
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
