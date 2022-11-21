@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Employees
 {
@@ -39,9 +40,22 @@ namespace Employees
             dataGridView1.DataSource = ds.Tables[0];
         }
 
-        public void insert_employee(Employee employee) 
+        public void insert(System.Windows.Forms.TextBox textBox1,
+            System.Windows.Forms.TextBox textBox2,
+            System.Windows.Forms.TextBox textBox3,
+            DateTimePicker dateTimePicker1,
+            DateTimePicker dateTimePicker2,
+            System.Windows.Forms.ComboBox comboBox1) 
         {
+            SQLiteCommand cmd = new SQLiteCommand(
+                    "insert into Persons (lastname, firstname, middlename," +
+            "birthdate, worksfrom, gender) values ('" +
+            textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "','" +
+            dateTimePicker1.Value.ToShortDateString() + "','" +
+                    dateTimePicker2.Value.ToShortDateString() + "','" +
+                    comboBox1.Text + "')", cnn);
 
+            cmd.ExecuteNonQuery();
         }
     }
 }

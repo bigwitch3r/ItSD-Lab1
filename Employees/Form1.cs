@@ -13,11 +13,12 @@ namespace Employees
 {
     public partial class Form1 : Form
     {
+        DBM dBM = new DBM();
         public Form1()
         {
             InitializeComponent();
 
-            DBM dBM = new DBM();
+            //DBM dBM = new DBM();
 
             dBM.connect();
 
@@ -77,22 +78,32 @@ namespace Employees
 
             if (valid == 1)
             {
-                SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3");
-                cnn.Open();
-                SQLiteCommand cmd = new SQLiteCommand(
+                dBM.connect();
+
+                /*SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3");
+                cnn.Open();*/
+
+                dBM.insert(textBox1, textBox2, textBox3, dateTimePicker1, dateTimePicker2, comboBox1);
+
+                /*SQLiteCommand cmd = new SQLiteCommand(
                     "insert into Persons (lastname, firstname, middlename," +
                     "birthdate, worksfrom, gender) values ('" +
                     textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "','" +
                     dateTimePicker1.Value.ToShortDateString() + "','" +
                     dateTimePicker2.Value.ToShortDateString() + "','" +
                     comboBox1.Text + "')", cnn);
-                cmd.ExecuteNonQuery();
-                SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
+                cmd.ExecuteNonQuery();*/
+
+                dBM.data_fill(dataGridView1);
+
+                /*SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
         "birthdate, worksfrom from Persons", cnn);
                 DataSet ds = new DataSet();
                 da.Fill(ds);
                 cnn.Close();
-                dataGridView1.DataSource = ds.Tables[0];
+                dataGridView1.DataSource = ds.Tables[0];*/
+
+                dBM.disconnect();
             }
         }
 
