@@ -38,5 +38,10 @@ namespace Employees
             da.Fill(ds);
             dataGridView1.DataSource = ds.Tables[0];
         }
+
+        public void insert_employee(Employee employee) 
+        {
+
+        }
     }
 }

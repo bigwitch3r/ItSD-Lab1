@@ -16,5 +16,7 @@ namespace Employees
         void create_table();
 
         void data_fill(DataGridView dataGridView1);
+
+        void insert_emplyee(Employee employee);
     }
 }
