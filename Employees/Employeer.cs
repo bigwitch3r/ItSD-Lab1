@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Employees
 {
-    internal class Empoyeer
+    internal class Employeer
     {
+        public string Name { get; set; }
+
+        public Employeer(string name)
+        { 
+            Name = name;
+        }
     }
 }
