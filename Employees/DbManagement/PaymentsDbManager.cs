@@ -11,7 +11,7 @@ namespace Employees
     internal class PaymentsDbManager : IDbManager
     {
         public SQLiteConnection Connection;
-        public PaymentsDbManager() 
+        public PaymentsDbManager()
         {
             Connection = new SQLiteConnection("Data Source=SalaryRules.txt");
         }
