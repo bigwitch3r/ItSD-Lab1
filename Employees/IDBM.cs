@@ -19,6 +19,7 @@ namespace Employees
             System.Windows.Forms.TextBox textBox1,
             System.Windows.Forms.TextBox textBox2,
             System.Windows.Forms.TextBox textBox3,
+            System.Windows.Forms.TextBox textBox4,
             DateTimePicker dateTimePicker1,
             DateTimePicker dateTimePicker2,
             System.Windows.Forms.ComboBox comboBox1);
@@ -28,6 +29,7 @@ namespace Employees
         void insert(System.Windows.Forms.TextBox textBox1,
             System.Windows.Forms.TextBox textBox2,
             System.Windows.Forms.TextBox textBox3,
+            System.Windows.Forms.TextBox textBox4,
             DateTimePicker dateTimePicker1,
             DateTimePicker dateTimePicker2,
             System.Windows.Forms.ComboBox comboBox1);

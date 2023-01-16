@@ -13,7 +13,7 @@ namespace Employees
 {
     public partial class Form1 : Form
     {
-        DBM dBM = new DBM();
+        SalaryDbm dBM = new SalaryDbm();
         public Form1()
         {
             InitializeComponent();
@@ -21,6 +21,8 @@ namespace Employees
             //DBM dBM = new DBM();
 
             dBM.connect();
+
+            //mySqlDbm.connect();
 
             /* SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3");
             cnn.Open();
@@ -35,9 +37,14 @@ namespace Employees
 
             // dataGridView1.DataSource = ds.Tables[0];
 
+
             dBM.create_table();
             dBM.data_fill(dataGridView1);
             dBM.disconnect();
+
+            //mySqlDbm.create_table();
+            //mySqlDbm.data_fill(dataGridView1);
+            //mySqlDbm.disconnect();
 
             form_setting();
         }
@@ -70,6 +77,8 @@ namespace Employees
             dataGridView1.Columns[5].HeaderText = "Д.р.";
             dataGridView1.Columns[6].Width = 100;
             dataGridView1.Columns[6].HeaderText = "С";
+            dataGridView1.Columns[7].Width = 100;
+            dataGridView1.Columns[6].HeaderText = "Должность";
         }
 
         private void btn1_Click(object sender, EventArgs e)
@@ -79,11 +88,13 @@ namespace Employees
             if (valid == 1)
             {
                 dBM.connect();
+                //mySqlDbm.connect();
 
                 /*SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3");
                 cnn.Open();*/
 
-                dBM.insert(textBox1, textBox2, textBox3, dateTimePicker1, dateTimePicker2, comboBox1);
+                dBM.insert(textBox1, textBox2, textBox3, textBox4, dateTimePicker1, dateTimePicker2, comboBox1);
+                //mySqlDbm.insert(textBox1, textBox2, textBox3, dateTimePicker1, dateTimePicker2, comboBox1);
 
                 /*SQLiteCommand cmd = new SQLiteCommand(
                     "insert into Persons (lastname, firstname, middlename," +
@@ -95,6 +106,7 @@ namespace Employees
                 cmd.ExecuteNonQuery();*/
 
                 dBM.data_fill(dataGridView1);
+                //mySqlDbm.data_fill(dataGridView1);
 
                 /*SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
         "birthdate, worksfrom from Persons", cnn);
@@ -104,6 +116,7 @@ namespace Employees
                 dataGridView1.DataSource = ds.Tables[0];*/
 
                 dBM.disconnect();
+                //mySqlDbm.disconnect();
             }
         }
 
@@ -112,15 +125,18 @@ namespace Employees
             string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
 
             dBM.connect();
+            //mySqlDbm.connect();
             /*SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3"); 
             cnn.Open();*/
 
             dBM.delete(id);
+            //mySqlDbm.delete(id);
             /*SQLiteCommand cmd = new SQLiteCommand(
                 "delete from Persons where id = " + id, cnn);
             cmd.ExecuteNonQuery();*/
 
             dBM.data_fill(dataGridView1);
+            //mySqlDbm.data_fill(dataGridView1);
             /*SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
      "birthdate, worksfrom from Persons", cnn);
             DataSet ds = new DataSet();
@@ -129,6 +145,7 @@ namespace Employees
             dataGridView1.DataSource = ds.Tables[0];*/
 
             dBM.disconnect();
+            //mySqlDbm.disconnect();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -145,10 +162,12 @@ namespace Employees
             string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
 
             dBM.connect();
+            //mySqlDbm.connect();
             /*SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3"); 
             cnn.Open();*/
 
-            dBM.update_table(id, textBox1, textBox2, textBox3, dateTimePicker1, dateTimePicker2, comboBox1);
+            dBM.update_table(id, textBox1, textBox2, textBox3, textBox4, dateTimePicker1, dateTimePicker2, comboBox1);
+            //mySqlDbm.update_table(id, textBox1, textBox2, textBox3, dateTimePicker1, dateTimePicker2, comboBox1);
             /*SQLiteCommand cmd = new SQLiteCommand(
                 "update Persons set lastname = '" + textBox1.Text + "'," + 
                                "firstname = '" + textBox2.Text + "'," +
@@ -160,7 +179,9 @@ namespace Employees
             cmd.ExecuteNonQuery();*/
 
             dBM.data_fill(dataGridView1);
+            //mySqlDbm.data_fill(dataGridView1);
             dBM.disconnect();
+            //mySqlDbm.disconnect();
 
             /*SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
     "birthdate, worksfrom from Persons", cnn); 
@@ -216,5 +237,10 @@ namespace Employees
             frm.Show();
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Form3 form3 = new Form3();
+            form3.Show();
+        }
     }
 }
