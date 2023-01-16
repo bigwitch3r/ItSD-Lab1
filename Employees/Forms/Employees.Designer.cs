@@ -1,6 +1,6 @@
 ﻿namespace Employees
 {
-    partial class Form1
+    partial class Employees
     {
         /// <summary>
         /// Required designer variable.

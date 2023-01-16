@@ -1,6 +1,6 @@
 ﻿namespace Employees
 {
-    partial class Form3
+    partial class Payments
     {
         /// <summary>
         /// Required designer variable.

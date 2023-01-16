@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace Employees
 {
-    public partial class Form2 : Form
+    public partial class Statistics : Form
     {
         public DataTable dt;
 
-        public Form2()
+        public Statistics()
         {
             InitializeComponent();
         }

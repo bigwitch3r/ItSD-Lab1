@@ -1,50 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SQLite;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 
 namespace Employees
 {
-    public partial class Form1 : Form
+    public partial class Employees : Form
     {
-        SalaryDbm dBM = new SalaryDbm();
-        public Form1()
+        EmployeesDbManager employeesDbManager = new EmployeesDbManager();
+
+        public Employees()
         {
             InitializeComponent();
 
-            //DBM dBM = new DBM();
+            string command = "create table if not exists Employees (id integer primary key, lastname text not null, firstname text not null, middlename text not null, birthdate text not null, worksfrom text not null, gender text not null, post text not null);";
+            employeesDbManager.execCommand(command);
 
-            dBM.connect();
-
-            //mySqlDbm.connect();
-
-            /* SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3");
-            cnn.Open();
-            SQLiteCommand command = cnn.CreateCommand();
-            command.CommandText = "create table if not exists Persons (id integer primary key, lastname text not null, firstname text not null, middlename text not null, birthdate text not null, worksfrom text not null, gender text not null);";
-            command.ExecuteNonQuery();
-            SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
-                "birthdate, worksfrom from Persons", cnn);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-            cnn.Close(); */
-
-            // dataGridView1.DataSource = ds.Tables[0];
-
-
-            dBM.create_table();
-            dBM.data_fill(dataGridView1);
-            dBM.disconnect();
-
-            //mySqlDbm.create_table();
-            //mySqlDbm.data_fill(dataGridView1);
-            //mySqlDbm.disconnect();
+            dataGridView1.DataSource = employeesDbManager.QueryTable();
 
             form_setting();
         }
@@ -87,36 +58,15 @@ namespace Employees
 
             if (valid == 1)
             {
-                dBM.connect();
-                //mySqlDbm.connect();
-
-                /*SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3");
-                cnn.Open();*/
-
-                dBM.insert(textBox1, textBox2, textBox3, textBox4, dateTimePicker1, dateTimePicker2, comboBox1);
-                //mySqlDbm.insert(textBox1, textBox2, textBox3, dateTimePicker1, dateTimePicker2, comboBox1);
-
-                /*SQLiteCommand cmd = new SQLiteCommand(
-                    "insert into Persons (lastname, firstname, middlename," +
-                    "birthdate, worksfrom, gender) values ('" +
+                string command = "insert into Employees (lastname, firstname, middlename," +
+                    "birthdate, worksfrom, gender, post) values ('" +
                     textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "','" +
                     dateTimePicker1.Value.ToShortDateString() + "','" +
                     dateTimePicker2.Value.ToShortDateString() + "','" +
-                    comboBox1.Text + "')", cnn);
-                cmd.ExecuteNonQuery();*/
+                    comboBox1.Text + "','" + textBox4.Text + "')";
 
-                dBM.data_fill(dataGridView1);
-                //mySqlDbm.data_fill(dataGridView1);
-
-                /*SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
-        "birthdate, worksfrom from Persons", cnn);
-                DataSet ds = new DataSet();
-                da.Fill(ds);
-                cnn.Close();
-                dataGridView1.DataSource = ds.Tables[0];*/
-
-                dBM.disconnect();
-                //mySqlDbm.disconnect();
+                employeesDbManager.execCommand(command);
+                dataGridView1.DataSource = employeesDbManager.QueryTable();
             }
         }
 
@@ -124,28 +74,10 @@ namespace Employees
         {
             string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
 
-            dBM.connect();
-            //mySqlDbm.connect();
-            /*SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3"); 
-            cnn.Open();*/
+            string command = $"delete from Employees where id = {id}";
+            employeesDbManager.execCommand(command);
 
-            dBM.delete(id);
-            //mySqlDbm.delete(id);
-            /*SQLiteCommand cmd = new SQLiteCommand(
-                "delete from Persons where id = " + id, cnn);
-            cmd.ExecuteNonQuery();*/
-
-            dBM.data_fill(dataGridView1);
-            //mySqlDbm.data_fill(dataGridView1);
-            /*SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
-     "birthdate, worksfrom from Persons", cnn);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-            cnn.Close();
-            dataGridView1.DataSource = ds.Tables[0];*/
-
-            dBM.disconnect();
-            //mySqlDbm.disconnect();
+            dataGridView1.DataSource = employeesDbManager.QueryTable();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -161,34 +93,17 @@ namespace Employees
 
             string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
 
-            dBM.connect();
-            //mySqlDbm.connect();
-            /*SQLiteConnection cnn = new SQLiteConnection("Data Source=Employees.sqlite3"); 
-            cnn.Open();*/
+            string command = "update Employees set lastname = '" + textBox1.Text + "'," +
+                "firstname = '" + textBox2.Text + "'," +
+                "middlename = '" + textBox3.Text + "'," +
+                "birthdate = '" + dateTimePicker1.Value.ToShortDateString() + "'," +
+                "post = '" + textBox4.Text + "'," +
+                "worksfrom = '" + dateTimePicker2.Value.ToShortDateString() + "', " +
+                "gender = '" + comboBox1.Text + "' " +
+                "where id = " + id;
+            employeesDbManager.execCommand(command);
 
-            dBM.update_table(id, textBox1, textBox2, textBox3, textBox4, dateTimePicker1, dateTimePicker2, comboBox1);
-            //mySqlDbm.update_table(id, textBox1, textBox2, textBox3, dateTimePicker1, dateTimePicker2, comboBox1);
-            /*SQLiteCommand cmd = new SQLiteCommand(
-                "update Persons set lastname = '" + textBox1.Text + "'," + 
-                               "firstname = '" + textBox2.Text + "'," +
-                               "middlename = '" + textBox3.Text + "'," +
-                               "birthdate = '" + dateTimePicker1.Value.ToShortDateString() + "'," +
-                               "worksfrom = '" + dateTimePicker2.Value.ToShortDateString() + "', " +
-                               "gender = '" + comboBox1.Text + "' " +
-                               "where id = " + id, cnn);
-            cmd.ExecuteNonQuery();*/
-
-            dBM.data_fill(dataGridView1);
-            //mySqlDbm.data_fill(dataGridView1);
-            dBM.disconnect();
-            //mySqlDbm.disconnect();
-
-            /*SQLiteDataAdapter da = new SQLiteDataAdapter("select id, lastname, firstname, middlename,gender," +
-    "birthdate, worksfrom from Persons", cnn); 
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-            cnn.Close();
-            dataGridView1.DataSource = ds.Tables[0];*/
+            dataGridView1.DataSource = employeesDbManager.QueryTable();
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -232,14 +147,14 @@ namespace Employees
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Form2 frm = new Form2();
+            Statistics frm = new Statistics();
             frm.dt = (DataTable)dataGridView1.DataSource;
             frm.Show();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3();
+            Payments form3 = new Payments();
             form3.Show();
         }
     }
