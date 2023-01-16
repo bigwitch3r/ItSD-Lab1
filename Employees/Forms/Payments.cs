@@ -45,7 +45,7 @@ namespace Employees
             int rate = rulesDbManager.GetRate(post);
 
             int hours = Convert.ToInt32(textBox2.Text);
-            int salary = calculator.SalaryCalculate(hours, rate);
+            int salary = calculator.SalaryCalculation(hours, rate);
 
             textBox3.Text = salary.ToString();
 
@@ -82,7 +82,7 @@ namespace Employees
         private void button4_Click(object sender, EventArgs e)
         {
             int salary = Convert.ToInt32(textBox3.Text);
-            double ndfl = calculator.NdflCalculate(salary);
+            double ndfl = calculator.NdflCalculation(salary);
 
             DateTime dateTime = DateTime.Today;
             string date = dateTime.ToShortDateString();

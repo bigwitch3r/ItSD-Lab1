@@ -8,12 +8,12 @@ namespace Employees
 {
     internal class Calculator
     {
-        public int SalaryCalculate(int hours, int rate)
+        public int SalaryCalculation(int hours, int rate)
         {
             return hours * rate;
         }
 
-        public double NdflCalculate(int salary)
+        public double NdflCalculation(int salary)
         {
             return salary * 0.13;
         }
