@@ -32,7 +32,7 @@ namespace Employees
         {
             Connection.Open();
 
-            SQLiteDataAdapter da = new SQLiteDataAdapter("select id, post, perhour from Rules", Connection);
+            SQLiteDataAdapter da = new SQLiteDataAdapter("select id, post, perhour, oklad from Rules1", Connection);
             DataSet ds = new DataSet();
             da.Fill(ds);
 
@@ -45,10 +45,16 @@ namespace Employees
         {
             Connection.Open();
 
+            int result = 0;
+
             int rate = 0;
+            int oklad = 0;
 
             SQLiteCommand command = Connection.CreateCommand();
-            command.CommandText = $"select perhour from Rules where post = '{post}'";
+            command.CommandText = $"select perhour from Rules1 where post = '{post}'";
+
+            SQLiteCommand command1 = Connection.CreateCommand();
+            command1.CommandText = $"select oklad from Rules1 where post = '{post}'";
 
             SQLiteDataReader reader = command.ExecuteReader();
 
@@ -57,9 +63,25 @@ namespace Employees
                 rate = Convert.ToInt32(reader["perhour"]);
             }
 
+            SQLiteDataReader reader1 = command1.ExecuteReader();
+
+            while (reader1.Read())
+            {
+                oklad = Convert.ToInt32(reader1["oklad"]);
+            }
+
             Connection.Close();
 
-            return rate;
+            if (oklad == 0)
+            {
+                result = rate;
+            }
+            else
+            {
+                result = oklad;
+            }
+
+            return result;
         }
     }
 }

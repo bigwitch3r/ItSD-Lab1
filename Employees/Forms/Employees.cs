@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
+using System.Data.Entity;
 using System.Windows.Forms;
+using Employees.Forms;
 
 namespace Employees
 {
@@ -16,6 +18,25 @@ namespace Employees
             employeesDbManager.execCommand(command);
 
             dataGridView1.DataSource = employeesDbManager.QueryTable();
+
+            using (EmployeeDb db = new EmployeeDb())
+            {
+                Employee employee = new Employee 
+                { 
+                    LastName = "Гончаров", 
+                    FirstName = "Данил", 
+                    MiddleName = "Алексеевич", 
+                    Birthdate = "10.10.2001", 
+                    WorksFrom = "10.10.2020", 
+                    Gender = "М", 
+                    Post = "Студент"
+                };
+
+                db.Employees.Add(employee);
+                db.SaveChanges();
+
+                dataGridView1.DataSource = db.Employees.Local.ToBindingList();
+            }
 
             form_setting();
         }
@@ -156,6 +177,12 @@ namespace Employees
         {
             Payments form3 = new Payments();
             form3.Show();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Ndfl ndfl = new Ndfl();
+            ndfl.Show();
         }
     }
 }

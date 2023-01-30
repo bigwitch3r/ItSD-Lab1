@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,27 @@ namespace Employees
             Connection.Close();
 
             return ds.Tables[0];
+        }
+
+        public double CalculateNdfl(int emp_id)
+        {
+            double result = 0;
+
+            Connection.Open();
+
+            SQLiteCommand command = Connection.CreateCommand();
+            command.CommandText = $"select sum(salary) as salary_sum from Payments1 where emp_id = '{emp_id}'";
+
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                result = Convert.ToDouble(reader["salary_sum"]) * 0.13;
+            }
+
+            Connection.Close();
+
+            return result;
         }
     }
 }

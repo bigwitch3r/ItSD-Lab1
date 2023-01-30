@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrtScDisable;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using PrtScDisable;
 
 namespace Employees
 {
@@ -23,8 +25,7 @@ namespace Employees
         public Payments()
         {
             InitializeComponent();
-
-            string rulesCreate = "create table if not exists Rules(id integer primary key, post text not null, perhour integer not null);";
+            string rulesCreate = "create table if not exists Rules1(id integer primary key, post text not null, perhour integer not null, oklad integer not null);";
             rulesDbManager.execCommand(rulesCreate);
 
             string paymentsCreate = "create table if not exists Payments1 (id integer primary key, emp_id text not null, salary integer not null, ndfl text not null, date text not null);";
@@ -45,9 +46,20 @@ namespace Employees
             int rate = rulesDbManager.GetRate(post);
 
             int hours = Convert.ToInt32(textBox2.Text);
-            int salary = calculator.SalaryCalculation(hours, rate);
 
-            textBox3.Text = salary.ToString();
+            if (rate > 9999)
+            {
+                double coefficient = Convert.ToDouble(textBox7.Text) / Convert.ToDouble(textBox8.Text);
+                double salary = rate * coefficient;
+                textBox3.Text = salary.ToString();
+            }
+            else
+            {
+                int salary = calculator.SalaryCalculation(hours, rate);
+                textBox3.Text = salary.ToString();
+            }
+
+            
 
         }
 
@@ -58,7 +70,7 @@ namespace Employees
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string addRule = $"insert into Rules (post, perhour) values ('{textBox4.Text}', '{textBox5.Text}')";
+            string addRule = $"insert into Rules1 (post, perhour, oklad) values ('{textBox4.Text}', '{textBox5.Text}', '{textBox6.Text}')";
             rulesDbManager.execCommand(addRule);
 
             dataGridView1.DataSource = rulesDbManager.QueryTable();
@@ -73,7 +85,7 @@ namespace Employees
         {
             string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
 
-            string deleteRule = $"delete from Rules where id = {id.ToString()}";
+            string deleteRule = $"delete from Rules1 where id = {id.ToString()}";
             rulesDbManager.execCommand(deleteRule);
 
             dataGridView1.DataSource = rulesDbManager.QueryTable();
@@ -81,7 +93,7 @@ namespace Employees
 
         private void button4_Click(object sender, EventArgs e)
         {
-            int salary = Convert.ToInt32(textBox3.Text);
+            int salary = Convert.ToInt32(Math.Round(Convert.ToDouble(textBox3.Text)));
             double ndfl = calculator.NdflCalculation(salary);
 
             DateTime dateTime = DateTime.Today;
@@ -91,6 +103,11 @@ namespace Employees
             paymentsDbManager.execCommand(makePayment);
 
             dataGridView2.DataSource = paymentsDbManager.QueryTable();
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
